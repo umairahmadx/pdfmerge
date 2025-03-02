@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pdfmerge/pdf_functions.dart';
 
@@ -26,7 +28,7 @@ class _HomePageState extends State<HomePage> {
             child: ElevatedButton(
               onPressed: () async {
                 load();
-                final imagePdf = await mergePDFs();
+                File imagePdf = await mergePDFs();
                 load();
                 openPdf(imagePdf);
               },
@@ -43,9 +45,9 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Center(child: CircularProgressIndicator(color: Colors.white,)),
-                  SizedBox(height: 10,),
-                  Text("Creating PDF",style: TextStyle(color: Colors.white),),
+                  Center(child: CircularProgressIndicator(color: Colors.white)),
+                  SizedBox(height: 10),
+                  Text("Creating PDF", style: TextStyle(color: Colors.white)),
                 ],
               ),
             ),

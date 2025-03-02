@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:open_file/open_file.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 Future<void> openPdf(File file) async {
@@ -26,6 +27,9 @@ List<String> getListPDFs() {
 }
 
 Future<File> mergePDFs() async {
+  Directory? root = await getExternalStorageDirectory();
+  root ??= await getApplicationDocumentsDirectory(); // Fallback
+
   // ✅ Create a new PDF document
   PdfDocument mergedPdf = PdfDocument();
 
@@ -91,7 +95,7 @@ Future<File> mergePDFs() async {
   List<int> bytes = mergedPdf.saveSync();
   mergedPdf.dispose();
 
-  final File file = File("/storage/emulated/0/Download/MergedMultiPage.pdf");
+  final File file = File("${root.path}/MergedMultiPage.pdf");
   await file.writeAsBytes(bytes);
 
   return file;
